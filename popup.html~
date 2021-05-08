@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="button.css">
+  </head>
+  <body>
+    <h1>Meloddi</h1>
+    <br>
+    <img src="assets/logoLarge.png"></img>
+    <br>
+    <h3>NAME * </h3>
+    <br>
+    <input placeholder="Item name"/>
+    <br>
+    <h3>PRICE *</h3>
+    <br>
+    <input placeholder="Item price"/>
+    <br>
+    <h3>QUANTITY *</h3>
+    <br>
+    <input placeholder="Item qty"/>
+    <br>
+    <button id="add">Add to Registry</button>
+  </body>
+</html>
