@@ -4,16 +4,20 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <h1>Meloddi</h1>
-    <img src="assets/logoLarge.png"></img>
+    <h3>Meloddi</h3>
+    <img id="productImage" src="assets/logo128.png"></img>
+    
     <h5>NAME * </h5>
-    <input placeholder="Item name"/>
+    <div>
+    <input id="productTitle" placeholder="Item name"/>
+    </div>
     <h5>PRICE *</h5>
-    <input placeholder="Item price"/>
+    <input id="productPrice" placeholder="Item price"/>
     <h5>QUANTITY *</h5>
-    <input placeholder="Item qty"/>
+    <input id="productQuantity" placeholder="Item qty"/>
     <br>
     <br>
     <button id="add">Add to Registry</button>
+    <script src="popup.js"></script>
   </body>
 </html>
