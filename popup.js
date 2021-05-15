@@ -7,11 +7,12 @@ var titleElement = document.getElementById("productTitle");
 var priceElement = document.getElementById("productPrice");
 var quantityElement = document.getElementById("productQuantity");
 var imageElement = document.getElementById("productImage");
+var urlElement = document.getElementById("productURL");
 
 // get attributes and update popup
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.scripting.executeScript({ target: { tabId: tabs[0].id }, files: ["bookmarkLoader.js"] }, function() {
-	var title = "", image = "", price = "";
+	var title = "", image = "", price = "", url = tabs[0].url;
 	new Promise(
 	    function(resolve, reject){
 		chrome.storage.local.get(["meloddiTitle", "meloddiImage", "meloddiPrice"], function(data){
@@ -24,6 +25,8 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 		titleElement.value = data.title;
 		priceElement.value = data.price;
 		imageElement.src = data.image;
+		quantityElement.value = 1; // qty defaults to 1
+		urlElement.value = url;
 		
 	    });
     });

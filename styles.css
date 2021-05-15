@@ -1,20 +1,71 @@
+**, *::before, *::after {
+    box-sizing: border-box;
+}
+
+:root {
+    --input-border: lightsalmon;
+    --input-focus-h: 6;
+    --input-focus-s: 93%;
+    --input-focus-l: 71%;
+}
+
 body {
-    width: 50em;
+    width: 60em;
+    margin: 0px;
+}
+
+hr {
+    background-color: lightsalmon;
+    border: none;
+    height: 1px;
+}
+input{
+    font-size: 16px;
+    font-size: max(16px, 1em);
+    font-family: inherit;
+    border: 2px solid #777;
+    border-radius: 4px;
+    margin: 0px 2px 0px 0px;
+}
+
+.main {
+    font-family: Lato, sans-serif;
+    background-color: #fffcfb;
 }
 
 div {
-    width: 100%;
-    display: flex;
+  margin-bottom: 5px;
+}
+
+label {
+    margin-left: 5px;
+    font-size: 17px;
+}
+
+input, label {
+    line-height: 2;
 }
 
 button {
-    background-color: #ee8d88
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #ee8d88;
+    font-family: Lato, sans-serif;
+    font-size: 19px;
+    color: #fff;
 }
 
-input {
-    flex: 1;
+input[readonly] {
+   border-style: dotted;
+   cursor: not-allowed;
+   color: #777;
 }
 
-#productImage {
-    height: 150px;
+input:focus {
+  border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+  box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.9);
+}
+
+input:focus {
+  outline: 3px solid transparent;
 }

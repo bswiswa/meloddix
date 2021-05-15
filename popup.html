@@ -1,23 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <h3>Meloddi</h3>
-    <img id="productImage" src="assets/logo128.png"></img>
-    
-    <h5>NAME * </h5>
-    <div>
-    <input id="productTitle" placeholder="Item name"/>
+<head>
+  <title>meloddi-x</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div style="display: flex; flex-direction: row; justify-content: center; align-self: center; background-color: #fdefec; ">
+      <img src="https://uploads-ssl.webflow.com/5fc5acc759bbf30e77c2f41e/5fcfe8c6f76ccd169db1f49e_Vertical_2.svg" alt="meloddi" loading="lazy"\>
+  </div>
+<div class="main" style="display: flex; justify-content: center; ">
+  <div style="height: 200px; width: auto;">
+    <img id="productImage" src="" alt="No image" style="max-height: 15em; max-width: 20em;"\>
+  </div>
+  <div style="flex-grow: 8; ">
+
+    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+      <label><strong>Name</strong></label>
+      <input id="productTitle" style="width: 84%;"/>
     </div>
-    <h5>PRICE *</h5>
-    <input id="productPrice" placeholder="Item price"/>
-    <h5>QUANTITY *</h5>
-    <input id="productQuantity" placeholder="Item qty"/>
-    <br>
-    <br>
-    <button id="add">Add to Registry</button>
-    <script src="popup.js"></script>
-  </body>
+    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+      <label><strong>Price</strong></label>
+      <input id="productPrice" style="width: 84%;"\>
+    </div>
+    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+      <label><strong>Quantity</strong></label>
+      <input id="productQuantity" style="width: 84%;"\>
+    </div>
+    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+      <label><strong>URL</strong></label>
+      <input id="productURL" style="width: 84%;" readonly="readonly"\>
+    </div>
+  </div>
+</div>
+<hr>
+<div style="display: flex; flex-direction: row; justify-content: center; align-self: center; ">
+  <button style="width: 25%; background-color: #ee8d88;"><strong>Add to Registry</strong></button>
+</div>
+<script src="popup.js"></script>
+</body>
 </html>

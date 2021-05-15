@@ -15,6 +15,7 @@ function getTitle(){
 
 function getImage(){
     var img = "";
+    // try getting image from the meta properties
     try {
         var imgMeta = document.querySelector("meta[property='og:image']");
         var imgsrc = imgMeta ? imgMeta.content : "";
@@ -30,6 +31,29 @@ function getImage(){
     catch(e){
         console.log("unable to obtain images");
     }
+
+    // try getting largest image on page
+    if (img == "")
+    {
+	try {
+	    var allImages = document.images;
+	    if (allImages.length > 0){
+		var i = 0, largestImage = allImages.item(i++), image = null;
+		var largestSize = largestImage.width * largestImage.height;
+		while(image = allImages.item(i++)){
+		    var currentImageSize = image.width * image.height;
+		    if (currentImageSize > largestSize){
+			largestImage = image;
+			largestSize = currentImageSize;
+		    }
+		}
+		img = largestImage.src;
+	    }
+	}
+	catch(e){
+	    console.log("unable to obtain images");
+	}
+    }
     return img;
 }
 
@@ -42,7 +66,7 @@ function getPrice(){
     catch(e){
         console.log("unable to obtain price")
     }
-    return price.indexOf("$") == 0 ? "$" + price : price;
+    return price.indexOf("$") == 0 ? price: "$" + price;
 }
 
 
