@@ -1,12 +1,14 @@
 // get attributes
 var title = getTitle();
-var image = getImage();
 var price = getPrice();
-// save in local storage
-chrome.storage.local.set({ meloddiTitle: title });
-chrome.storage.local.set({ meloddiImage: image });
-chrome.storage.local.set({ meloddiPrice: price });
-
+var image = getImage();
+// default quantity as 1
+var quantity = 1;
+// broadcast attributes
+chrome.runtime.sendMessage({message: "setTitle", payload: title });
+chrome.runtime.sendMessage({message: "setPrice", payload: price });
+chrome.runtime.sendMessage({message: "setImage", payload: image });
+chrome.runtime.sendMessage({message: "setQuantity", payload: quantity });
 
 function getTitle(){
     var title = document.title;
@@ -68,26 +70,3 @@ function getPrice(){
     }
     return price.indexOf("$") == 0 ? price: "$" + price;
 }
-
-
-/*var xpath = "//body//*[contains(text(),'$')]";
-var matchingElements = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-var target = null;
-try {
-    var	el = matchingElements.iterateNext();
-    while (el && (el.tagName == "SCRIPT" || el.tagName == "OPTION"))
-    {
-        el = matchingElements.iterateNext();
-	alert(el.tagName);
-    }
-    target = el;
-
-
-}
-catch(e) {
-    console.log("Unable to iterate over result set");
-}
-
-var price = target? target.innerText : null;
-alert("price" + price);
-*/
