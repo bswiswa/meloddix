@@ -9,7 +9,7 @@ on[data-test=custom-quantity-picker] > div > div > span", "a[data-test=carousel-
     etsy: ["h1[data-buy-box-listing-title=true]", "div[data-buy-box-region=price] * p", "#zNOSUCHELEMENT", "li[data-palette-listing-image] > img"],
     potterybarnkids: ["div[class=pip-summary] > h1", "span[class=product-price] * span[class=price-amount]", "input[aria-label=Quantity]", "img#hero"],
     crateandbarrel: ["h1[class*=product-name]", "span[class*=regPrice]", "div[class=compound-quantity] > input", "div[class=gallery-main-image] * img"],
-    walmart: ["h1[class*=prod-ProductTitle]", "span[class*=price] > span[class=visuallyhidden]", "select[aria-label=Quantity]", "img[data-tl-id=ProcuctPage-primary-image]"]
+    walmart: ["h1[class*=prod-ProductTitle]", "span[class*=price] > span[class=visuallyhidden]", "select[aria-label=Quantity]", "img[data-tl-id=ProductPage-primary-image]"]
 };
 
 // get server
