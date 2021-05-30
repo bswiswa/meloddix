@@ -3,6 +3,9 @@ var priceElement = document.getElementById("productPrice");
 var quantityElement = document.getElementById("productQuantity");
 var imageElement = document.getElementById("productImage");
 var urlElement = document.getElementById("productURL");
+var colorElement = document.getElementById("productColor");
+var sizeElement = document.getElementById("productSize");
+var notesElement = document.getElementById("productNotes");
 
 //clean up local storage
 cleanUpLocalStorage();
@@ -19,14 +22,18 @@ var HARD_CODED_URLS = new Set([
 
 // listen for messages between popup and tab
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse){
-    if( request.message == "setTitle")
-	titleElement.value = request.payload;
-    if( request.message == "setPrice")
-	priceElement.value = request.payload;
-    if( request.message == "setQuantity")
-	quantityElement.value = request.payload;
-    if( request.message == "setImage")
-	imageElement.src = request.payload;
+    if (request.message == "setTitle")
+	    titleElement.value = request.payload;
+    if (request.message == "setPrice")
+	    priceElement.value = request.payload;
+    if (request.message == "setQuantity")
+	    quantityElement.value = request.payload;
+    if (request.message == "setImage")
+	    imageElement.src = request.payload;
+    if (request.message == "setSize")
+	    sizeElement.value = request.payload;
+    if (request.message == "setColor")
+	    colorElement.value = request.payload;
 });
 
 // get attributes and update popup
@@ -51,18 +58,6 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 	chrome.scripting.executeScript({ target: { tabId: tabs[0].id }, files: ["metadataBookmarkLoader.js"] });
     }
 });
-
-function setPopupFields(){
-    chrome.storage.local.get(
-	["meloddiTitle", "meloddiPrice", "meloddiQuantity", "meloddiImage", "meloddiURL"],
-	function(data){
-	    titleElement.value = data.meloddiTitle;
-	    priceElement.value = data.meloddiPrice;
-	    imageElement.src = data.meloddiImage;
-	    quantityElement.value = data.meloddiQuantity ? data.meloddiQuantity : 1;
-	    urlElement.value = data.meloddiURL;
-	});
-}
 
 async function cleanUpLocalStorage(){
     // reset local storage

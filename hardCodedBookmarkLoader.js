@@ -1,35 +1,127 @@
-// dictionary of hard coded css selectors
-var HARD_CODED_CSS_SELECTORS = {
-    amazon: ["#productTitle", "#priceblock_ourprice", "#quantity", "#landingImage"],
-    target: ["h1[data-test=product-title] > span", "div[data-test=product-price]", "butt\
-on[data-test=custom-quantity-picker] > div > div > span", "a[data-test=carousel-image] *\
- img"],
-    buybuybaby: ["h1[data-locator=pdp-productnametext]", "span[data-locator=pdp-pricetext]", "button[id=qtySelect-button] > span", "div[class*=ProductMediaCarouselStyle] > img"],
-    babylist: ["h1[class*=productName] > span[itemprop=name]", "span[itemprop=price]", "input[name=quantity]", "div[class*=product-images] > img"],
-    etsy: ["h1[data-buy-box-listing-title=true]", "div[data-buy-box-region=price] * p", "#zNOSUCHELEMENT", "li[data-palette-listing-image] > img"],
-    potterybarnkids: ["div[class=pip-summary] > h1", "span[class=product-price] * span[class=price-amount]", "input[aria-label=Quantity]", "img#hero"],
-    crateandbarrel: ["h1[class*=product-name]", "span[class*=regPrice]", "div[class=compound-quantity] > input", "div[class=gallery-main-image] * img"],
-    walmart: ["h1[class*=prod-ProductTitle]", "span[class*=price] > span[class=visuallyhidden]", "select[aria-label=Quantity]", "img[data-tl-id=ProductPage-primary-image]"]
-};
-
 // get server
 chrome.storage.local.get("server", function({ server }){
     // get attributes
-    var cssSelectors = HARD_CODED_CSS_SELECTORS[server];
-    var title = getValue(cssSelectors[0]);
-    var price = getValue(cssSelectors[1]);
+    var selector = getSelectors(server);
+    var title = selector.title();
+    var price = selector.price();
     if (price.indexOf("$") != 0)
 	price = "$" + price; 
-    var quantity = getValue(cssSelectors[2]);
-    var image = getImageSource(cssSelectors[3]);
+    var quantity = selector.quantity();
+    var image = selector.image();
+    var size = selector.size();
+    var color = selector.color();
     
     chrome.runtime.sendMessage({ message: "setTitle", payload: title });
     chrome.runtime.sendMessage({ message: "setPrice", payload: price });
     chrome.runtime.sendMessage({ message: "setQuantity", payload: quantity || "1" });
     chrome.runtime.sendMessage({ message: "setImage", payload: image });
+    if (size != "")
+        chrome.runtime.sendMessage({ message: "setSize", payload: size });
+    if (color != "")
+        chrome.runtime.sendMessage({ message: "setColor", payload: color });
 });
 
-function getValue(cssSelector){
+function getSelectors(server){
+    var selectors = {};
+    switch(server){
+        case "amazon":
+            selectors = { 
+                title: () => get("#productTitle"), 
+                price: () => get("#priceblock_ourprice"), 
+                quantity: () => get("#quantity"), 
+                image: () => getImageSource("#landingImage"), 
+                size: () => get("#dropdown_selected_size_name * span[class=a-dropdown-prompt]"),
+                color: () => get("#variation_color_name * span") 
+                };
+            break;
+        case "target":
+            selectors = { 
+                title: () => get("h1[data-test=product-title] > span"), 
+                price: () => get("div[data-test=product-price]"), 
+                quantity: () => get("button[data-test=custom-quantity-picker] > div > div > span"),
+                image: () => getImageSource("a[data-test=carousel-image] * img"),
+                size: () => get("div[data-test=variationTheme-size] > span"), 
+                color: () => get("div[data-test=variationTheme-color] > span")
+            };
+            break;
+        case "buybuybaby":
+            selectors = {
+                title: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("h1[data-locator=pdp-productnametext]").innerText.trim(),
+                price: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("span[data-locator=pdp-pricetext]").innerText.trim(),
+                quantity: () => { 
+                    var num = document.querySelector("wmHostPdp").shadowRoot.querySelector("button[id=qtySelect-button] > span").innerText;
+                    return (num + "").trim();
+                    },
+                image: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("div[class*=ProductMediaCarouselStyle] > img").src,
+                size: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("div[id^=sizesWrap] * span[class*=facetLabelSelected][data-amp-bind-text]").innerText.trim(),
+                color: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("div[id^=colorsWrap] * span[class*=facetLabelSelected][data-amp-bind-text]").innerText.trim()
+            };
+            break;
+        case "babylist":
+            selectors = {
+                title: () => get("h1[class*=productName] > span[itemprop=name]"),
+                price: () => get("span[itemprop=price]"),
+                quantity: () => get("input[name=quantity]"),
+                image: () => getImageSource("div[class*=product-images] > img"),
+                size: () => document.querySelector("div[aria-label='size options'] > button[aria-checked=true]").getAttribute("aria-label").innerText.trim(),
+                color: () => document.querySelector("div[aria-label='color options'] > button[aria-checked=true]").getAttribute("aria-label").innerText.trim()
+            };
+            break;
+        case "etsy":
+            selectors = {
+                title: () => get("h1[data-buy-box-listing-title=true]"),
+                price: () => get("div[data-buy-box-region=price] * p"),
+                quantity: () =>  get("#zNOSUCHELEMENT"), 
+                image: () => getImageSource("li[data-palette-listing-image] > img"), 
+                size: () => document.querySelector("#inventory-variation-select-0 > option[selected]").innerText.trim(),
+                color: () => document.querySelector("#inventory-variation-select-1 > option[selected]").innerText.trim()
+            };
+            break;
+        case "potterybarnkids":
+            selectors = {
+                title: () => get("div[class=pip-summary] > h1"),
+                price: () => get("div[class=pip-summary] * span[class=product-price] * span[class=currency-amount]"),
+                quantity: () => get("input[aria-label=Quantity]"),
+                image: () => getImageSource("img#hero"),
+                size: () => get("div[class*=subset-attributes] > h4:not([class*=graphic]) > span[class*=selectedValue]"),
+                color: () => get("div[class*=subset-attributes] > h4[class*=graphic] > span[class*=selectedValue]")
+            };
+            break;
+        case "crateandbarrel":
+            selectors = {
+                title: () => get("h1[class*=product-name]"),
+                price: () => get("span[class*=regPrice]"),
+                quantity: () => get("div[class=compound-quantity] > input"),
+                image: () => getImageSource("div[class=gallery-main-image] * img"),
+                size: () => get("ul[class*=size] * div[class*=selected] * span"),
+                color: () => get("ul[class*=color] * div[class*=selected] > input")
+            };
+            break;
+        case "walmart":
+            selectors = {
+                title: () => get("h1[class*=prod-ProductTitle]"),
+                price: () => get("span[class*=price] > span[class=visuallyhidden]"),
+                quantity: () => get("select[aria-label=Quantity]"),
+                image: () => getImageSource("img[class*=hover-zoom-hero-image]"),
+                size: () => get("div[id='Clothing Size'] > span:last-of-type"),
+                color: () => get("#Color > span:last-child")
+            };
+            break;
+        default:
+            selectors = {
+                title: () => "",
+                price: () => "",
+                quantity: () => "",
+                image: () => "",
+                size: () => "",
+                color: () => ""
+            };
+    }
+    return selectors;
+}
+
+
+function get(cssSelector){
     el = document.querySelector(cssSelector);
     if (el){
         if (el.value) return (el.value + "").trim();

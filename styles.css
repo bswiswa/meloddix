@@ -19,7 +19,7 @@ hr {
     border: none;
     height: 1px;
 }
-input{
+input, textarea {
     font-size: 16px;
     font-size: max(16px, 1em);
     font-family: inherit;
@@ -61,11 +61,11 @@ input[readonly] {
    color: #777;
 }
 
-input:focus {
+input:focus, textarea:focus {
   border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
   box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.9);
 }
 
-input:focus {
+input:focus, textarea:focus {
   outline: 3px solid transparent;
 }
