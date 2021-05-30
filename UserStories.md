@@ -9,4 +9,3 @@ Functionality User Stories
  As a user, I'd like to be able to capture the images of the items that I am viewing, these would automatically be populated in the extension. | 5 | 21 | -[x] |
  As a user, I'd like to be able to add additional notes on a given product for my registry guests | 4 |21 | |
  As a user, I'd like to log in to the extension once per session and I expect subsequent clicks to remember that I am logged in. | 4 |21 | |
- 
