@@ -44,17 +44,37 @@ function getSelectors(server){
                 color: () => get("div[data-test=variationTheme-color] > span")
             };
             break;
+        case "etsy":
+            selectors = {
+                title: () => get("h1[data-buy-box-listing-title=true]"),
+                price: () => get("div[data-buy-box-region=price] * p"),
+                quantity: () =>  get("#zNOSUCHELEMENT"), 
+                image: () => getImageSource("li[data-palette-listing-image] > img"), 
+                size: () => getText("#inventory-variation-select-0 > option[selected]"),
+                color: () => getText("#inventory-variation-select-1 > option[selected]")
+            };
+            break;
         case "buybuybaby":
             selectors = {
-                title: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("h1[data-locator=pdp-productnametext]").innerText.trim(),
-                price: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("span[data-locator=pdp-pricetext]").innerText.trim(),
-                quantity: () => { 
-                    var num = document.querySelector("wmHostPdp").shadowRoot.querySelector("button[id=qtySelect-button] > span").innerText;
+                title: function () { return document.querySelector("#wmHostPdp").shadowRoot.querySelector("h1[class*=prodTitle]").innerText.trim(); },
+                price: function () { return document.querySelector("#wmHostPdp").shadowRoot.querySelector("div[class*=trackIsPrice]").textContent.trim(); },
+                quantity: function () { 
+                    var num = document.querySelector("#wmHostPdp").shadowRoot.querySelector("button[id*=qtyList]").innerText;
                     return (num + "").trim();
                     },
-                image: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("div[class*=ProductMediaCarouselStyle] > img").src,
-                size: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("div[id^=sizesWrap] * span[class*=facetLabelSelected][data-amp-bind-text]").innerText.trim(),
-                color: () => document.querySelector("wmHostPdp").shadowRoot.querySelector("div[id^=colorsWrap] * span[class*=facetLabelSelected][data-amp-bind-text]").innerText.trim()
+                image: function () { return document.querySelector("#wmHostPdp").shadowRoot.querySelector("amp-img > img").src; },
+                size: function () { 
+                    var el = document.querySelector("#wmHostPdp").shadowRoot.querySelector("div[id^=sizesWrap] * button[class*=active]");
+                    if(el)
+                        return el.innerText.trim();
+                    return "";
+                },
+                color: function () { 
+                    var el = document.querySelector("#wmHostPdp").shadowRoot.querySelector("div[id^=colorsWrap] * span[class*=facetLabelSelected][data-amp-bind-text]");
+                    if(el)
+                        return el.innerText.trim();
+                    return "";
+                 }
             };
             break;
         case "babylist":
@@ -63,18 +83,19 @@ function getSelectors(server){
                 price: () => get("span[itemprop=price]"),
                 quantity: () => get("input[name=quantity]"),
                 image: () => getImageSource("div[class*=product-images] > img"),
-                size: () => document.querySelector("div[aria-label='size options'] > button[aria-checked=true]").getAttribute("aria-label").innerText.trim(),
-                color: () => document.querySelector("div[aria-label='color options'] > button[aria-checked=true]").getAttribute("aria-label").innerText.trim()
-            };
-            break;
-        case "etsy":
-            selectors = {
-                title: () => get("h1[data-buy-box-listing-title=true]"),
-                price: () => get("div[data-buy-box-region=price] * p"),
-                quantity: () =>  get("#zNOSUCHELEMENT"), 
-                image: () => getImageSource("li[data-palette-listing-image] > img"), 
-                size: () => document.querySelector("#inventory-variation-select-0 > option[selected]").innerText.trim(),
-                color: () => document.querySelector("#inventory-variation-select-1 > option[selected]").innerText.trim()
+                color: () => "batsi",
+                size: function () {  
+                    var el = document.querySelector("div[aria-label='size options'] > button[aria-checked=true]");
+                    if(el)
+                        return el.getAttribute("aria-label").trim();
+                    return "";
+                 },
+                color: function () { 
+                    var el = document.querySelector("div[aria-label='color options'] > button[aria-checked=true]");
+                    if(el)
+                        return el.getAttribute("aria-label").trim();
+                    return "";
+                }
             };
             break;
         case "potterybarnkids":
@@ -122,10 +143,18 @@ function getSelectors(server){
 
 
 function get(cssSelector){
-    el = document.querySelector(cssSelector);
+    var el = document.querySelector(cssSelector);
     if (el){
         if (el.value) return (el.value + "").trim();
         else return el.innerText.trim();
+    }
+    else return "";
+}
+
+function getText(cssSelector){
+    var el = document.querySelector(cssSelector);
+    if (el){
+        return el.innerText.trim();
     }
     else return "";
 }
