@@ -56,20 +56,20 @@ function getSelectors(server){
             break;
         case "buybuybaby":
             selectors = {
-                title: function () { return document.querySelector("#wmHostPdp").shadowRoot.querySelector("h1[class*=prodTitle]").innerText.trim(); },
-                price: function () { return document.querySelector("#wmHostPdp").shadowRoot.querySelector("div[class*=trackIsPrice]").textContent.trim(); },
-                quantity: function () { 
+                title: () =>  document.querySelector("#wmHostPdp").shadowRoot.querySelector("h1[class*=prodTitle]").innerText.trim(),
+                price: () => document.querySelector("#wmHostPdp").shadowRoot.querySelector("div[class*=trackIsPrice]").textContent.trim(),
+                quantity: () => { 
                     var num = document.querySelector("#wmHostPdp").shadowRoot.querySelector("button[id*=qtyList]").innerText;
                     return (num + "").trim();
                     },
-                image: function () { return document.querySelector("#wmHostPdp").shadowRoot.querySelector("amp-img > img").src; },
-                size: function () { 
+                image: () => document.querySelector("#wmHostPdp").shadowRoot.querySelector("amp-img > img").src,
+                size: () => { 
                     var el = document.querySelector("#wmHostPdp").shadowRoot.querySelector("div[id^=sizesWrap] * button[class*=active]");
                     if(el)
                         return el.innerText.trim();
                     return "";
                 },
-                color: function () { 
+                color: () => { 
                     var el = document.querySelector("#wmHostPdp").shadowRoot.querySelector("div[id^=colorsWrap] * span[class*=facetLabelSelected][data-amp-bind-text]");
                     if(el)
                         return el.innerText.trim();
@@ -84,13 +84,13 @@ function getSelectors(server){
                 quantity: () => get("input[name=quantity]"),
                 image: () => getImageSource("div[class*=product-images] > img"),
                 color: () => "batsi",
-                size: function () {  
+                size: () => {  
                     var el = document.querySelector("div[aria-label='size options'] > button[aria-checked=true]");
                     if(el)
                         return el.getAttribute("aria-label").trim();
                     return "";
                  },
-                color: function () { 
+                color: () => { 
                     var el = document.querySelector("div[aria-label='color options'] > button[aria-checked=true]");
                     if(el)
                         return el.getAttribute("aria-label").trim();
