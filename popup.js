@@ -7,6 +7,18 @@ var colorElement = document.getElementById("productColor");
 var sizeElement = document.getElementById("productSize");
 var notesElement = document.getElementById("productNotes");
 
+// create custom event that we can manually dispatch when we update popup values via JS
+const inputChangeEvent = new Event('inputchange');
+// add event handlers to the title input that checks for existence
+titleElement.addEventListener('inputchange', validateTitle, false);
+titleElement.addEventListener('input', validateTitle, false);
+// add event handlers to the price input that keeps the $ and checks for valid numbers
+priceElement.addEventListener('inputchange', validatePrice, false);
+priceElement.addEventListener('input', validatePrice, false);
+// add event handlers to the quantity input that check for valid numbers
+quantityElement.addEventListener('inputchange', validateQuantity, false);
+quantityElement.addEventListener('input', validateQuantity, false);
+
 //clean up local storage
 cleanUpLocalStorage();
 
@@ -22,12 +34,19 @@ var HARD_CODED_URLS = new Set([
 
 // listen for messages between popup and tab
 chrome.runtime.onMessage.addListener( function(request, sender, sendResponse){
-    if (request.message == "setTitle")
-	    titleElement.value = request.payload;
-    if (request.message == "setPrice")
-	    priceElement.value = request.payload;
+    if (request.message == "setTitle"){
+        titleElement.value = request.payload;
+        titleElement.dispatchEvent(inputChangeEvent);
+    }
+    if (request.message == "setPrice"){
+        priceElement.value = request.payload;
+        priceElement.dispatchEvent(inputChangeEvent);
+    }
     if (request.message == "setQuantity")
-	    quantityElement.value = request.payload;
+    {
+        quantityElement.value = request.payload;
+        quantityElement.dispatchEvent(inputChangeEvent);
+    }   
     if (request.message == "setImage")
 	    imageElement.src = request.payload;
     if (request.message == "setSize")
@@ -63,4 +82,40 @@ async function cleanUpLocalStorage(){
     // reset local storage
     await chrome.storage.local.clear();
 
+}
+
+function validateTitle(e){
+    let text = e.target.value;
+    // test if valid title (not just spaces or empty)
+    let re = /[a-zA-Z0-9]+/
+    if (re.test(text) == false)
+        e.target.classList.add("invalid");
+    else
+        e.target.classList.remove("invalid");
+}
+
+function validatePrice(e){
+    let text = e.target.value;
+    // force price to start with $
+    if(text.charAt(0) != '$')
+    {
+        text = "$" + text;
+        e.target.value = text;
+    }
+    // test if valid price
+    let re = /^\$\d+\.*\d*$/
+    if (re.test(text) == false)
+        e.target.classList.add("invalid");
+    else
+        e.target.classList.remove("invalid");
+}
+
+function validateQuantity(e){
+    let text = e.target.value;
+    // test if valid quantity (number)
+    let re = /^\d+$/
+    if (re.test(text) == false)
+        e.target.classList.add("invalid");
+    else
+        e.target.classList.remove("invalid");
 }

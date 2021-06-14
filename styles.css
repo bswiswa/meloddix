@@ -19,13 +19,14 @@ hr {
     border: none;
     height: 1px;
 }
-input, textarea {
+input, textarea, .invalid {
     font-size: 16px;
     font-size: max(16px, 1em);
     font-family: inherit;
     border: 2px solid #777;
     border-radius: 4px;
     margin: 0px 2px 0px 0px;
+    width: 84%;
 }
 
 .main {
@@ -61,11 +62,17 @@ input[readonly] {
    color: #777;
 }
 
-input:focus, textarea:focus {
+.invalid {
+    border: solid 3px red;
+}
+
+input:focus:not(.invalid), textarea:focus:not(.invalid) {
   border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
   box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.9);
 }
 
-input:focus, textarea:focus {
+input:focus:not(.invalid), textarea:focus:not(.invalid) {
   outline: 3px solid transparent;
 }
+
+
