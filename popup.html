@@ -5,48 +5,53 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div style="display: flex; flex-direction: row; justify-content: center; align-self: center; background-color: #fdefec; ">
+  <div class="header">
       <img src="./assets/leleki128.jpg" alt="meloddi" loading="lazy"\>
   </div>
-<div class="main" style="display: flex; justify-content: center; ">
+<div class="main">
   <div style="height: 200px; width: auto;">
     <img id="productImage" src="" alt="No image" style="max-height: 15em; max-width: 20em;"\>
   </div>
-  <div style="flex-grow: 8; ">
+  <div class="input-container">
 
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-      <label><strong>Name</strong></label>
+    <div class="input-row">
+      <label>Name</label>
       <input id="productTitle" class="invalid"/>
     </div>
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-      <label><strong>Price</strong></label>
+    <div class="input-row">
+      <label>Price</label>
       <input id="productPrice" class="invalid"\>
     </div>
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-      <label><strong>Quantity</strong></label>
+    <div class="input-row">
+      <label>Quantity</label>
       <input id="productQuantity" class="invalid"\>
     </div>
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-      <label><strong>Size</strong></label>
+    <div class="input-row">
+      <label>Size</label>
       <input id="productSize"\>
     </div>
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-      <label><strong>Color</strong></label>
+    <div class="input-row">
+      <label>Color</label>
       <input id="productColor"\>
     </div>
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-      <label><strong>Notes</strong></label>
+    <div class="input-row">
+      <label>Notes</label>
       <textarea id="productNotes" rows="3"></textarea>
     </div>
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-      <label><strong>URL</strong></label>
+    <div class="input-row">
+      <label>URL</label>
       <input id="productURL" readonly="readonly"\>
     </div>
   </div>
 </div>
-<hr>
-<div style="display: flex; flex-direction: row; justify-content: center; align-self: center; ">
-  <button><strong>Add to Registry</strong></button>
+<div class="footer">
+  <div class="vertical-aligner">
+    <div class="vertical-aligner-top"></div>
+    <div class="vertically-aligned-item"><button><strong>Add to Registry</strong></button></div>
+    <div class="vertical-aligner-bottom"></div>
+      
+  </div>
+  
 </div>
 <script src="popup.js"></script>
 </body>

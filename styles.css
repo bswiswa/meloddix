@@ -1,9 +1,28 @@
+/* default font */
+@font-face {
+    font-family: 'Gosto';
+    src: 
+        local('Gosto LightRounded'),
+        local('Gosto-LightRounded'),
+        url('fonts/Gosto-LightRounded.otf')
+        format('opentype');
+}
+/* bold version */
+@font-face {
+    font-family: 'Gosto';
+    src: 
+        local('Gosto BoldRounded'),
+        local('Gosto-BoldRounded'),
+        url('fonts/Gosto-BoldRounded.otf')
+        format('opentype');
+        font-weight: bold;
+}
 **, *::before, *::after {
     box-sizing: border-box;
 }
 
 :root {
-    --input-border: lightsalmon;
+    --input-border: #E6AA9C;
     --input-focus-h: 6;
     --input-focus-s: 93%;
     --input-focus-l: 71%;
@@ -12,12 +31,15 @@
 body {
     width: 60em;
     margin: 0px;
+    font-family: 'Gosto', sans-serif;
 }
 
 hr {
-    background-color: lightsalmon;
+    background-color: #C8987D;
     border: none;
     height: 1px;
+    padding: 0px;
+    margin: 0;
 }
 input, textarea, .invalid {
     font-size: 16px;
@@ -29,16 +51,48 @@ input, textarea, .invalid {
     width: 84%;
 }
 
-.main {
-    font-family: Lato, sans-serif;
-    background-color: #fffcfb;
+.header, .footer {
+    background-color: #EFE8D7;
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center; 
+    align-self: center;
+    margin: 0;
 }
 
-div {
-  margin-bottom: 5px;
+div.header, div.footer {
+    border: solid 1px #C8987D;
+}
+
+div.footer {
+    margin-top: 5px;
+    height: 80px;
+    display: flex; 
+    justify-content: center; 
+}
+
+.main {
+    /* font-family: Lato, sans-serif; */
+    /* background-color: #fffcfb; */
+    display: flex; 
+    justify-content: center; 
+}
+
+.input-container {
+    flex-grow: 8;
+}
+
+div.input-row {
+  margin-top: 5px;
+  display: flex; 
+  flex-direction: row; 
+  justify-content: space-between;
 }
 
 label {
+    font-family: 'Gosto', sans-serif;
+    font-weight: bold;
+    font-size: larger;
     margin-left: 5px;
     font-size: 17px;
 }
@@ -51,9 +105,10 @@ button {
     padding: 10px;
     border-radius: 25px;
     background-color: #CCA57A;
-    font-family: Lato, sans-serif;
+    font-family: 'Gosto', sans-serif;
     font-size: 19px;
     color: #F4F3F2;
+    max-height: 50px;
 }
 
 button:hover {
@@ -80,5 +135,18 @@ input:focus:not(.invalid), textarea:focus:not(.invalid) {
   outline: 3px solid transparent;
 }
 
+.vertical-aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vertical-aligner-top {
+    align-self: flex-start;
+}
+
+.vertical-aligner-bottom {
+    align-self: flex-end;
+}
 
 
