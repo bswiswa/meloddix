@@ -137,7 +137,12 @@ input[readonly] {
     border: solid 1px red;
 }
 
+
 input:focus:not(.invalid), textarea:focus:not(.invalid) {
+    border: solid 1px #E6AA9C;
+}
+
+input:hover:not(.invalid), textarea:hover:not(.invalid) {
     border: solid 1px #677CAE;
 }
 
