@@ -1,4 +1,7 @@
-/* default font */
+/* default body font - Quicksand font */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
+
+/* default label font */
 @font-face {
     font-family: 'Gosto';
     src: 
@@ -7,7 +10,8 @@
         url('fonts/Gosto-LightRounded.otf')
         format('opentype');
 }
-/* bold version */
+
+/* default label font - bold version */
 @font-face {
     font-family: 'Gosto';
     src: 
@@ -22,16 +26,16 @@
 }
 
 :root {
-    --input-border: #E6AA9C;
-    --input-focus-h: 6;
-    --input-focus-s: 93%;
-    --input-focus-l: 71%;
+    --border-radius: 27px;
+    --input-padding: 20px;
+    --margin-standard: 20px;
 }
 
 body {
-    width: 60em;
+    width: 70em;
     margin: 0px;
-    font-family: 'Gosto', sans-serif;
+    font-family: 'Quicksand', sans-serif;
+    background:#EFE8D7;
 }
 
 hr {
@@ -42,14 +46,17 @@ hr {
     margin: 0;
 }
 input, textarea, .invalid {
-    font-size: 16px;
-    font-size: max(16px, 1em);
+    font-size: 1.25em;
     font-family: inherit;
-    border: 2px solid #777;
-    border-radius: 4px;
-    margin: 0px 2px 0px 0px;
-    width: 84%;
+    padding: 0px var(--input-padding);
+    border-radius: var(--border-radius);
+    width: 25em;
 }
+
+input#productSize, input#productQuantity, input#productColor {
+    width: 10em;
+}
+
 
 .header, .footer {
     background-color: #EFE8D7;
@@ -60,9 +67,6 @@ input, textarea, .invalid {
     margin: 0;
 }
 
-div.header, div.footer {
-    border: solid 1px #C8987D;
-}
 
 div.footer {
     margin-top: 5px;
@@ -72,7 +76,6 @@ div.footer {
 }
 
 .main {
-    /* font-family: Lato, sans-serif; */
     /* background-color: #fffcfb; */
     display: flex; 
     justify-content: center; 
@@ -86,24 +89,32 @@ div.input-row {
   margin-top: 5px;
   display: flex; 
   flex-direction: row; 
-  justify-content: space-between;
+  justify-content: left;
 }
 
 label {
     font-family: 'Gosto', sans-serif;
     font-weight: bold;
-    font-size: larger;
     margin-left: 5px;
-    font-size: 17px;
+    font-size: 1.5em;
+    color: #677CAE;
+    width: 3.9em;
 }
 
 input, label {
     line-height: 2;
 }
 
+input, textarea {
+    font-family: 'Quicksand': sans-serif;
+    margin: 0px var(--margin-standard);
+    border-width: 0px;
+}
+
 button {
     padding: 10px;
     border-radius: 25px;
+    border-width: 0px;
     background-color: #CCA57A;
     font-family: 'Gosto', sans-serif;
     font-size: 19px;
@@ -119,20 +130,20 @@ button:hover {
 input[readonly] {
    border-style: dotted;
    cursor: not-allowed;
-   color: #777;
+   background: lightgrey;
 }
 
 .invalid {
-    border: solid 3px red;
+    border: solid 1px red;
 }
 
 input:focus:not(.invalid), textarea:focus:not(.invalid) {
-  border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
-  box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.9);
+    border: solid 1px #677CAE;
 }
 
-input:focus:not(.invalid), textarea:focus:not(.invalid) {
-  outline: 3px solid transparent;
+
+input:focus, textarea:focus {
+  outline: 1px solid transparent;
 }
 
 .vertical-aligner {
@@ -149,4 +160,29 @@ input:focus:not(.invalid), textarea:focus:not(.invalid) {
     align-self: flex-end;
 }
 
+.vertical-aligner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+
+.horizontal-aligner-left {
+    align-self: flex-start;
+}
+
+.horizontal-aligner-right {
+    align-self: flex-end;
+}
+
+#productImageWrapper {
+    height: 230px;
+    width: auto;
+    margin: 0px 20px;
+}
+
+#productImage {
+    max-height: 18em;
+    max-width: 24em;
+    border-radius: var(--border-radius);
+}
